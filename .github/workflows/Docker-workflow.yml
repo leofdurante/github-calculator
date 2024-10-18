@@ -12,13 +12,12 @@ jobs:
 
     steps:
     - name: Checkout Code
-      uses: actions/checkout@v3  # Updated to the latest version
+      uses: actions/checkout@v2
 
     - name: Set up JDK 11
-      uses: actions/setup-java@v3  # Updated to the latest version
+      uses: actions/setup-java@v2
       with:
         java-version: '11'
-        distribution: 'adopt'  # Added distribution to fix error
 
     - name: Run Maven clean, compile, and test
       run: |
@@ -28,11 +27,11 @@ jobs:
 
     - name: Build Docker Image
       run: |
-        docker build -t github-calculator .
+        docker build -t leofdurante/github-calculator:latest .
 
     - name: Push Docker Image to Docker Hub
       uses: docker/build-push-action@v2
       with:
         context: .
         push: true
-        tags: ${{ secrets.DOCKER_USERNAME }}/github-calculator:latest
+        tags: leofdurante/github-calculator:latest  # Ensure this matches your Docker Hub repo
