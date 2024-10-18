@@ -18,7 +18,7 @@ jobs:
       uses: actions/setup-java@v2
       with:
         java-version: '11'
-        distribution: 'adopt'  # Added required distribution field
+        distribution: 'adopt'  # You can change this to 'zulu' or others if needed
 
     - name: Run Maven clean, compile, and test
       run: |
@@ -30,9 +30,12 @@ jobs:
       run: |
         docker build -t leofdurante/github-calculator:latest .
 
-    - name: Push Docker Image to Docker Hub
-      uses: docker/build-push-action@v2
+    - name: Log in to Docker Hub
+      uses: docker/login-action@v2  # Ensures Docker login
       with:
-        context: .
-        push: true
-        tags: leofdurante/github-calculator:latest  # Ensure this matches your Docker Hub repo
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+
+    - name: Push Docker Image to Docker Hub
+      run: |
+        docker push leofdurante/github-calculator:latest
