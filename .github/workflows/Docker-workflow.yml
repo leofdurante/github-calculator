@@ -18,6 +18,7 @@ jobs:
       uses: actions/setup-java@v2
       with:
         java-version: '11'
+        distribution: 'adopt'  # Added required distribution field
 
     - name: Run Maven clean, compile, and test
       run: |
